@@ -1,40 +1,36 @@
 "use client";
 
-import { loginUser } from "@/_actions";
+import { createUsers } from "@/_actions";
 import { ModeToggle } from "@/components/examples/ModeToggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { FormFields, Userschema } from "@/types/types";
+import { Userschema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
-export default function Home() {
+type FormFields = z.infer<typeof Userschema>;
+
+export default function SignUp() {
   const {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<FormFields>({ resolver: zodResolver(Userschema) });
 
-  const router = useRouter();
-
   const onSumbit: SubmitHandler<FormFields> = async (data) => {
-    try {
-      const info = await loginUser(data);
+    const info = await createUsers(data);
 
-      if (!info?.success) {
-        return console.log(info?.errors || info?.message);
-      }
-
-      reset();
-      router.push("/dashboard");
-    } catch (error) {
-      console.error(error);
+    if (!info?.success) {
+      return console.log(info?.message || info?.errors);
     }
+
+    console.log(info);
+    reset();
   };
 
   return (
@@ -53,10 +49,10 @@ export default function Home() {
       >
         <div className="mb-5">
           <h1 className="scroll-m-20 text-center mb-1 text-xl md:text-3xl font-semibold tracking-tight first:mt-0">
-            Login to account
+            Create an account
           </h1>
           <p className="text-[12px] md:text-sm text-center text-muted-foreground">
-            Enter your credentials below to sign in
+            Enter your credentials below to sign up
           </p>
         </div>
         <div className="grid mb-3">
@@ -93,9 +89,10 @@ export default function Home() {
           {isSubmitting ? "Submitting..." : "Submit"}
         </Button>
         <p className="text-[10px] md:text-sm text-center text-muted-foreground hover:underline hover:text-black dark:hover:text-white">
-          <Link href="/signup">Do you have an account? Create an account</Link>
+          <Link href="/">Login to account</Link>
         </p>
       </form>
+      <p>{errors.root?.message}</p>
       <div className="fixed bottom-5 right-5">
         <ModeToggle />
       </div>
