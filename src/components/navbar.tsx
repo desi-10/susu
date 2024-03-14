@@ -3,38 +3,60 @@
 import React from "react";
 import { Input } from "./ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
-import { Separator } from "@radix-ui/react-dropdown-menu";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const path = usePathname();
   return (
-    <main className="container p-3 border-b">
+    <main className="">
       <section className="flex justify-between items-center">
         <div className="flex justify-between items-center space-x-10">
           <Label>Desmond Kudjuh</Label>
 
-          <div className="flex items-center space-x-5 text-gray-400">
-            <Label className="dark:hover:text-white hover:text-black cursor-pointer transition-colors duration-300">
-              Overview
-            </Label>
-            <Label className="dark:hover:text-white hover:text-black cursor-pointer transition-colors duration-300">
-              Customer
-            </Label>
-            <Label className="dark:hover:text-white hover:text-black cursor-pointer transition-colors duration-300">
-              Cards
-            </Label>
+          <div className="hidden lg:flex items-center space-x-5 text-gray-400">
+            <Link href="/dashboard">
+              <Label
+                className={`dark:hover:text-white hover:text-black cursor-pointer transition-colors duration-300 ${
+                  path === "/dashboard"
+                    ? " dark:text-white text-black font-bold"
+                    : ""
+                }`}
+              >
+                Overview
+              </Label>
+            </Link>
+
+            <Link href="/customers">
+              <Label
+                className={`dark:hover:text-white hover:text-black cursor-pointer transition-colors duration-300 ${
+                  path === "/customers"
+                    ? "dark:text-white text-black font-bold"
+                    : ""
+                }}`}
+              >
+                Customers
+              </Label>
+            </Link>
+            <Link href="/cards">
+              <Label
+                className={`dark:hover:text-white hover:text-black cursor-pointer transition-colors duration-300 ${
+                  path === "/cards"
+                    ? "dark:text-white text-black font-bold"
+                    : ""
+                }}`}
+              >
+                Cards
+              </Label>
+            </Link>
           </div>
         </div>
 
-        <div className="flex items-center space-x-5">
-          <Input
-            type="text"
-            name=""
-            id=""
-            className=""
-            placeholder="Search..."
-          />
+        <div className="hidden lg:flex items-center space-x-5">
+          <form action="">
+            <Input type="text" className="" placeholder="Search..." />
+          </form>
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
             <AvatarFallback>CN</AvatarFallback>

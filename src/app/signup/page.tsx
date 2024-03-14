@@ -5,13 +5,13 @@ import { ModeToggle } from "@/components/examples/ModeToggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Userschema } from "@/types/types";
+import { createUserschema, CreateFormFields } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
-type FormFields = z.infer<typeof Userschema>;
+// type FormFields = z.infer<typeof Userschema>;
 
 export default function SignUp() {
   const {
@@ -20,17 +20,17 @@ export default function SignUp() {
     reset,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<FormFields>({ resolver: zodResolver(Userschema) });
+  } = useForm<CreateFormFields>({ resolver: zodResolver(createUserschema) });
 
-  const onSumbit: SubmitHandler<FormFields> = async (data) => {
+  const onSumbit: SubmitHandler<CreateFormFields> = async (data) => {
     const info = await createUsers(data);
 
-    if (!info?.success) {
-      return console.log(info?.message || info?.errors);
+    if (info?.success) {
+      console.log(info);
+      reset();
     }
 
-    console.log(info);
-    reset();
+    return console.log(info?.message || info?.errors);
   };
 
   return (

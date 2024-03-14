@@ -5,7 +5,7 @@ import { ModeToggle } from "@/components/examples/ModeToggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { FormFields, Userschema } from "@/types/types";
+import { FormFields, loginUserSchema } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
@@ -18,7 +18,7 @@ export default function Home() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<FormFields>({ resolver: zodResolver(Userschema) });
+  } = useForm<FormFields>({ resolver: zodResolver(loginUserSchema) });
 
   const router = useRouter();
 

@@ -14,9 +14,11 @@ export default function ApplicationLayout({
         enableSystem
         disableTransitionOnChange
       >
-        <body>
-          <Navbar />
-          {children}
+        <body className="">
+          <section className="container mx-auto border-b p-3">
+            <Navbar />
+          </section>
+          <section className="container mx-auto">{children}</section>
         </body>
       </ThemeProvider>
     </html>

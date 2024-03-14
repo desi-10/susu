@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
+import { postCustomerSchema } from "./schema/customerSchema";
 
 export const GET = async () => {
   try {
@@ -11,7 +12,15 @@ export const GET = async () => {
 };
 
 export const POST = async (req: Request) => {
-  const { customerName } = await req.json();
+  const body = await req.json();
+
+  const validFields = postCustomerSchema.safeParse(body);
+
+  if (!validFields.success) {
+    return NextResponse.json({ success: false, error: validFields.error });
+  }
+  const { customerName } = validFields.data;
+
   try {
     const createCustomer = await prisma.customer.create({
       data: {
@@ -29,7 +38,20 @@ export const PATCH = async (
   req: Request,
   { params }: { params: { id: string } }
 ) => {
-  const { customerName } = await req.json();
+  if (params.id === "") {
+    return NextResponse.json({ success: false, error: "Customer not found" });
+  }
+
+  const body = await req.json();
+
+  const validFields = postCustomerSchema.safeParse(body);
+
+  if (!validFields.success) {
+    return NextResponse.json({ success: false, error: validFields.error });
+  }
+
+  const { customerName } = validFields.data;
+
   try {
     const findCustomer = await prisma.customer.update({
       where: { customer_id: params.id },

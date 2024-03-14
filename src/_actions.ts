@@ -1,11 +1,16 @@
 "use server";
 
-import { FormFields, Userschema } from "./types/types";
+import {
+  CreateFormFields,
+  FormFields,
+  createUserschema,
+  loginUserSchema,
+} from "./types/types";
 import prisma from "./lib/db";
 
-export const createUsers = async (clientData: FormFields) => {
+export const createUsers = async (clientData: CreateFormFields) => {
   try {
-    const validFields = Userschema.safeParse(clientData);
+    const validFields = createUserschema.safeParse(clientData);
 
     if (!validFields.success) {
       const errors = validFields.error.errors.map((error) => ({
@@ -38,7 +43,7 @@ export const createUsers = async (clientData: FormFields) => {
 
 export const loginUser = async (clientData: FormFields) => {
   try {
-    const validFields = Userschema.safeParse(clientData);
+    const validFields = loginUserSchema.safeParse(clientData);
 
     if (!validFields.success) {
       const errors = validFields.error.errors.map((error) => ({
