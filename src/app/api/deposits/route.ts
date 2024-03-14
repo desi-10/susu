@@ -1,6 +1,6 @@
 import prisma from "@/lib/db";
-import Error from "next/error";
 import { NextResponse } from "next/server";
+import { deopositSchema, patchDepositSchema } from "./schema/depositSchema";
 
 export const GET = async () => {
   try {
@@ -13,7 +13,13 @@ export const GET = async () => {
 };
 
 export const POST = async (req: Request) => {
-  const { cardId, userId, rate } = await req.json();
+  const body = await req.json();
+  const validFields = deopositSchema.safeParse(body);
+
+  if (!validFields.success)
+    return NextResponse.json({ success: false, error: validFields.error });
+
+  const { cardId, userId, rate } = validFields.data;
 
   try {
     const createdDeposit = await prisma.deposit.create({
@@ -34,7 +40,17 @@ export const PATCH = async (
   req: Request,
   { params }: { params: { id: string } }
 ) => {
-  const { rate } = await req.json();
+  const body = await req.json();
+  if (params.id === "")
+    return NextResponse.json({ success: false, error: "Deposit not found" });
+
+  const validFields = patchDepositSchema.safeParse(body);
+
+  if (!validFields.success)
+    return NextResponse.json({ success: false, error: validFields.error });
+
+  const { rate } = validFields.data;
+
   try {
     const updatedDeposit = await prisma.deposit.update({
       where: { deposit_id: params.id },
@@ -49,9 +65,15 @@ export const PATCH = async (
 };
 
 export const DELETE = async ({ params }: { params: { id: string } }) => {
-  await prisma.deposit.delete({
-    where: { deposit_id: params.id },
-  });
+  if (params.id === "")
+    return NextResponse.json({ success: false, error: "Deposit not found" });
 
-  return NextResponse.json({ success: true, message: "Deposit deleted" });
+  try {
+    await prisma.deposit.delete({
+      where: { deposit_id: params.id },
+    });
+    return NextResponse.json({ success: true, message: "Deposit deleted" });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message });
+  }
 };

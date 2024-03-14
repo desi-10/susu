@@ -85,6 +85,21 @@ export default function SignUp() {
             </span>
           )}
         </div>
+        <div className="grid mb-5">
+          <Label htmlFor="" className="text-xs font-medium leading-none mb-1">
+            Confirm Password
+          </Label>
+          <Input
+            {...register("confirmpassword")}
+            type="password"
+            placeholder="***************"
+          />
+          {errors.confirmpassword && (
+            <span className="text-red-500 text-[10px] md:text-xs">
+              {errors.confirmpassword.message}
+            </span>
+          )}
+        </div>
         <Button className="w-full mb-3" disabled={isSubmitting}>
           {isSubmitting ? "Submitting..." : "Submit"}
         </Button>

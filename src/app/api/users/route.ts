@@ -3,11 +3,10 @@ import prisma from "@/lib/db";
 
 export async function GET() {
   try {
-    const users = await prisma.deposit.findMany();
+    const users = await prisma.user.findMany();
     return NextResponse.json({ success: true, data: users });
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message });
   }
 }
-
-export async function POST(request: Request) {}
+export async function POST(req: Request) {}
