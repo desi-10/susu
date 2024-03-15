@@ -1,28 +1,19 @@
-// "use client";
+import { columns } from "@/components/table/columns";
+import { DataTable } from "@/components/table/data-table";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
-import React, { useEffect } from "react";
 
-const fetchCards = async () => {
-  const res = await fetch("http://localhost:3000/api/card");
-  return res.json();
-};
-
-const CardsPage = async () => {
-  const data = await fetchCards();
-  console.log(data);
-
+const CustomerComponent = ({ data }: any) => {
   return (
-    <main>
-      <section className="flex justify-between items-center py-3">
-        <h1 className="text-lg lg:text-3xl font-bold">Cards</h1>
+    <>
+      <section className="flex justify-between items-center py-5">
+        <h1 className="text-lg lg:text-3xl font-bold">Customers</h1>
         <div>
           <Button className="shadow-md">Download</Button>
         </div>
       </section>
 
       <section className="grid gap-2 md:grid-cols-4 lg:gap-5 mb-10">
-        <div className="border p-5 rounded-lg shadow-lg">
+        <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
             <p>Revenue</p>
             <p>$</p>
@@ -30,7 +21,7 @@ const CardsPage = async () => {
           <p>$45,231.89</p>
           <p>+20.1% from last month</p>
         </div>
-        <div className="border p-5 rounded-lg shadow-lg">
+        <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
             <p>Revenue</p>
             <p>$</p>
@@ -38,7 +29,7 @@ const CardsPage = async () => {
           <p>$45,231.89</p>
           <p>+20.1% from last month</p>
         </div>
-        <div className="border p-5 rounded-lg shadow-lg">
+        <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
             <p>Revenue</p>
             <p>$</p>
@@ -46,7 +37,7 @@ const CardsPage = async () => {
           <p>$45,231.89</p>
           <p>+20.1% from last month</p>
         </div>
-        <div className="border p-5 rounded-lg shadow-lg">
+        <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
             <p>Revenue</p>
             <p>$</p>
@@ -56,12 +47,14 @@ const CardsPage = async () => {
         </div>
       </section>
 
-      <section className="grid lg:grid-cols-2 gap-5">
+      {/* <section className="grid lg:grid-cols-2 gap-5">
         <div className="border rounded shadow-lg h-80">Chart</div>
         <div className="border rounded shadow-lg h-80">Sales</div>
-      </section>
-    </main>
+      </section> */}
+
+      {/* <DataTable columns={columns} data={data} /> */}
+    </>
   );
 };
 
-export default CardsPage;
+export default CustomerComponent;

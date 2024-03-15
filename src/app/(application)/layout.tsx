@@ -13,12 +13,13 @@ export default function ApplicationLayout({
         defaultTheme="system"
         enableSystem
         disableTransitionOnChange
+        // storageKey="theme"
       >
         <body className="">
-          <section className="container mx-auto border-b p-3">
+          <section className="w-[90%] lg:container mx-auto border-b p-3">
             <Navbar />
           </section>
-          <section className="container mx-auto">{children}</section>
+          <section className="w-[90%] lg:container mx-auto">{children}</section>
         </body>
       </ThemeProvider>
     </html>
