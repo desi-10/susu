@@ -58,7 +58,7 @@ const Navbar = () => {
             <Input type="text" className="" placeholder="Search..." />
           </form>
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
+            {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>
