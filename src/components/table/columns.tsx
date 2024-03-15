@@ -46,7 +46,8 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
+    id: "Customer ID",
+    accessorKey: "customer_id",
     header: ({ column }) => {
       return (
         <Button

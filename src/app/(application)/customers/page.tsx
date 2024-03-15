@@ -9,7 +9,6 @@ const fetchCustomers = async () => {
 
 const CustomersPage = async () => {
   const data = await fetchCustomers();
-  console.log(data);
 
   return (
     <main>

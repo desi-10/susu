@@ -68,7 +68,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="rounded-md ">
+      <div className="rounded-md">
         <div className="flex items-center mb-5">
           <Input
             type="text"

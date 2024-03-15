@@ -48,7 +48,9 @@ const CustomerComponent = ({ data }: any) => {
         </div>
       </section>
 
-      <DataTable columns={columns} data={data} />
+      <div className="my-10">
+        <DataTable columns={columns} data={data} />
+      </div>
     </>
   );
 };
