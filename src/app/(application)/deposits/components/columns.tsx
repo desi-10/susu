@@ -13,16 +13,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Checkbox } from "../ui/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
-  customer_id: string;
-  customer_name: string;
+export type Deposit = {
+  deposit_id: string;
+  rate: number;
+  card_id: string;
+  userId: string;
+  user: {
+    id: string;
+    username: string;
+  };
+  start_date: string;
+  customerId: string;
+  updatedAt: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Deposit>[] = [
   {
     id: "id",
     header: ({ table }) => (
@@ -46,8 +55,58 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    id: "Customer ID",
-    accessorKey: "customer_id",
+    id: "Deposit ID",
+    accessorKey: "deposit_id",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Deposit ID
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="truncate w-44">{row.original.deposit_id}</div>
+    ),
+  },
+  {
+    accessorKey: "rate",
+    header: () => <div>Rate</div>,
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("rate"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount);
+
+      return <div className="font-medium">{formatted}</div>;
+    },
+  },
+  {
+    id: "Username",
+    accessorKey: "user.username",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          User ID
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return <div className="capitalize">{row.original.user.username}</div>;
+    },
+  },
+
+  {
+    id: "customer ID",
+    accessorKey: "customerId",
     header: ({ column }) => {
       return (
         <Button
@@ -59,40 +118,28 @@ export const columns: ColumnDef<Payment>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="truncate w-44">{row.original.customer_id}</div>
-    ),
+    cell: ({ row }) => {
+      return <div className="truncate w-44">{row.original.customerId}</div>;
+    },
   },
   {
-    id: "name",
-    accessorKey: "customer_name",
+    id: "Updated Date",
+    accessorKey: "updatedAt",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          Updated Date
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="">{row.original.customer_name}</div>,
-    enableHiding: false,
+    cell: ({ row }) => {
+      return <div>{row.original.updatedAt}</div>;
+    },
   },
-  // {
-  //   accessorKey: "amount",
-  //   header: () => <div className="text-right">Amount</div>,
-  //   cell: ({ row }) => {
-  //     const amount = parseFloat(row.getValue("amount"));
-  //     const formatted = new Intl.NumberFormat("en-US", {
-  //       style: "currency",
-  //       currency: "USD",
-  //     }).format(amount);
-
-  //     return <div className="text-right font-medium">{formatted}</div>;
-  //   },
-  // },
   {
     id: "actions",
     cell: ({ row }) => {
@@ -109,7 +156,7 @@ export const columns: ColumnDef<Payment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.customer_id)}
+              onClick={() => navigator.clipboard.writeText(payment.card_id)}
             >
               Copy payment ID
             </DropdownMenuItem>

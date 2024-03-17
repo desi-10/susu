@@ -50,6 +50,17 @@ const Navbar = () => {
                 Cards
               </Label>
             </Link>
+            <Link href="/deposits">
+              <Label
+                className={`dark:hover:text-white hover:text-black cursor-pointer transition-colors duration-300 ${
+                  path === "/deposits"
+                    ? "dark:text-white text-black font-bold"
+                    : ""
+                }}`}
+              >
+                Deposits
+              </Label>
+            </Link>
           </div>
         </div>
 

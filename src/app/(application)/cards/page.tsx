@@ -1,65 +1,48 @@
-// "use client";
-import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
-import React, { useEffect } from "react";
+import { z } from "zod";
+import CardComponent from "./component/CardComponent";
+
+const cardSchema = z.object({
+  cardId: z.string(),
+  rate: z.number().positive(),
+  startedDate: z.string(),
+  hasEnded: z.boolean(),
+  totalAmount: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+const ArrayCardSchema = z.array(cardSchema);
+
+export type TArrayCardSchema = z.infer<typeof ArrayCardSchema>;
+export type cardSchema = z.infer<typeof cardSchema>;
 
 const fetchCards = async () => {
-  const res = await fetch("http://localhost:3000/api/card");
-  return res.json();
+  try {
+    const res = await fetch("http://localhost:3000/api/card", {
+      cache: "no-store",
+    });
+
+    const data = await res.json();
+    if (!data.success) throw "Error";
+    const validFields = ArrayCardSchema.safeParse(data.data);
+    if (!validFields.success) throw validFields.error.flatten();
+    return validFields.data;
+  } catch (error) {
+    console.log(error);
+    console.error(error);
+  }
 };
 
 const CardsPage = async () => {
   const data = await fetchCards();
+
+  if (!data) return <div>Something went wrong</div>;
+
   console.log(data);
 
   return (
     <main>
-      <section className="flex justify-between items-center py-3">
-        <h1 className="text-lg lg:text-3xl font-bold">Cards</h1>
-        <div>
-          <Button className="shadow-md">Download</Button>
-        </div>
-      </section>
-
-      <section className="grid gap-2 md:grid-cols-4 lg:gap-5 mb-10">
-        <div className="border p-5 rounded-lg shadow-lg">
-          <div className="flex justify-between">
-            <p>Revenue</p>
-            <p>$</p>
-          </div>
-          <p>$45,231.89</p>
-          <p>+20.1% from last month</p>
-        </div>
-        <div className="border p-5 rounded-lg shadow-lg">
-          <div className="flex justify-between">
-            <p>Revenue</p>
-            <p>$</p>
-          </div>
-          <p>$45,231.89</p>
-          <p>+20.1% from last month</p>
-        </div>
-        <div className="border p-5 rounded-lg shadow-lg">
-          <div className="flex justify-between">
-            <p>Revenue</p>
-            <p>$</p>
-          </div>
-          <p>$45,231.89</p>
-          <p>+20.1% from last month</p>
-        </div>
-        <div className="border p-5 rounded-lg shadow-lg">
-          <div className="flex justify-between">
-            <p>Revenue</p>
-            <p>$</p>
-          </div>
-          <p>$45,231.89</p>
-          <p>+20.1% from last month</p>
-        </div>
-      </section>
-
-      <section className="grid lg:grid-cols-2 gap-5">
-        <div className="border rounded shadow-lg h-80">Chart</div>
-        <div className="border rounded shadow-lg h-80">Sales</div>
-      </section>
+      <CardComponent data={data} />
     </main>
   );
 };
