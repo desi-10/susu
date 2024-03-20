@@ -4,11 +4,15 @@ import CardComponent from "./component/CardComponent";
 const cardSchema = z.object({
   cardId: z.string(),
   rate: z.number().positive(),
-  startedDate: z.string(),
+  startDate: z.string(),
   hasEnded: z.boolean(),
   totalAmount: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
+  customer: z.object({
+    customerId: z.string(),
+    customerName: z.string(),
+  }),
 });
 
 const ArrayCardSchema = z.array(cardSchema);
@@ -24,9 +28,10 @@ const fetchCards = async () => {
 
     const data = await res.json();
     if (!data.success) throw "Error";
-    const validFields = ArrayCardSchema.safeParse(data.data);
-    if (!validFields.success) throw validFields.error.flatten();
-    return validFields.data;
+    // const validFields = ArrayCardSchema.safeParse(data.data);
+    // if (!validFields.success) throw validFields.error.flatten();
+    // return validFields.data;
+    return data.data;
   } catch (error) {
     console.log(error);
     console.error(error);

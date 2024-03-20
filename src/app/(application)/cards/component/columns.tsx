@@ -62,20 +62,20 @@ export const columns: ColumnDef<cardSchema>[] = [
   },
   {
     id: "customer Name",
-    accessorKey: "customer.customer_name",
+    accessorKey: "customerName",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Customer ID
+          Customer Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      // return <div>{row.original}</div>;
+      return <div>{row.original.customer.customerName}</div>;
     },
   },
   {
@@ -93,7 +93,7 @@ export const columns: ColumnDef<cardSchema>[] = [
   },
   {
     id: "Start Date",
-    accessorKey: "start_date",
+    accessorKey: "startDate",
     header: ({ column }) => {
       return (
         <Button
@@ -106,7 +106,7 @@ export const columns: ColumnDef<cardSchema>[] = [
       );
     },
     cell: ({ row }) => {
-      return <div>{row.original.startedDate}</div>;
+      return <div>{row.original.startDate}</div>;
     },
   },
   {

@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-export const postCustomerSchema = z.object({
-  customerName: z
-    .string()
-    .min(2, "Name must be at least 2 characters long")
-    .max(50, "Name must be less than 50 characters long"),
+export const formFields = z.object({
+  customerName: z.string().min(2, "Enter customer name"),
+  gender: z.enum(["Male", "Female"]).nullable(),
+  location: z.string().nullable(),
+  nextOfKin: z.string().nullable(),
 });
 
-export type TPostCustomerSchema = z.infer<typeof postCustomerSchema>;
+export type TFormFields = z.infer<typeof formFields>;

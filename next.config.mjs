@@ -1,7 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  // output: "export",
-  // basePath: "http://localhost:3000/",
-};
+const nextConfig = {};
 
 export default nextConfig;

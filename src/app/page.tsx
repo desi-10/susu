@@ -29,9 +29,10 @@ export default function Home() {
       if (!info?.success) {
         return console.log(info?.errors || info?.message);
       }
-
-      reset();
+      console.log(info.findUser);
+      localStorage.setItem("user", JSON.stringify(info.findUser));
       router.push("/dashboard");
+      reset();
     } catch (error) {
       console.error(error);
     }

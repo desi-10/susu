@@ -117,13 +117,7 @@ export function DataTable<TData, TValue>({
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Button
-              variant="outline"
-              onClick={handleExcel}
-              className="shadow-md"
-            >
-              Export to Excel
-            </Button>
+            <Button onClick={handleExcel}>Export to Excel</Button>
           </div>
         </div>
         <div className="border rounded-md">

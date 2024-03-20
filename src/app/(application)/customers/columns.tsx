@@ -14,7 +14,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "../../../components/ui/checkbox";
-import { customerSchema } from "@/app/(application)/customers/page";
+import { customerSchema } from "./types/types";
+import Link from "next/link";
 
 export const columns: ColumnDef<customerSchema>[] = [
   {
@@ -66,7 +67,7 @@ export const columns: ColumnDef<customerSchema>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          Customer Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -88,7 +89,7 @@ export const columns: ColumnDef<customerSchema>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="">{row.original.gender}</div>,
+    cell: ({ row }) => <div className="">{row.original?.gender}</div>,
   },
   {
     id: "Location",
@@ -104,7 +105,7 @@ export const columns: ColumnDef<customerSchema>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="">{row.original.location}</div>,
+    cell: ({ row }) => <div className="">{row.original?.location}</div>,
   },
   // {
   //   accessorKey: "amount",
@@ -140,7 +141,9 @@ export const columns: ColumnDef<customerSchema>[] = [
               Copy Customer ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/customers/${data.customerId}`}>View customer</Link>
+            </DropdownMenuItem>
             {/* <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>

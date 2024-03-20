@@ -1,22 +1,21 @@
-// import { columns } from "@/components/table/columns";
 import { DataTable } from "@/components/table/data-table";
-import { Button } from "@/components/ui/button";
 import React from "react";
 import { columns } from "./columns";
 import { TArrayCardSchema } from "../page";
+import CreateCard from "./CreateCard";
 
 const CardComponent = ({ data }: { data: TArrayCardSchema }) => {
   return (
     <>
       <section className="flex justify-between items-center py-5">
         <h1 className="text-lg lg:text-3xl font-bold">Cards</h1>
-        <Button>Create card</Button>
+        <CreateCard />
       </section>
 
       <section className="grid gap-2 md:grid-cols-4 lg:gap-5 mb-10">
         <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
-            <p>Total Customers</p>
+            <p>Total Cards</p>
             <p>$</p>
           </div>
           <p>$45,231.89</p>
@@ -24,7 +23,7 @@ const CardComponent = ({ data }: { data: TArrayCardSchema }) => {
         </div>
         <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
-            <p>Revenue</p>
+            <p>Total Revenue</p>
             <p>$</p>
           </div>
           <p>$45,231.89</p>
@@ -32,7 +31,7 @@ const CardComponent = ({ data }: { data: TArrayCardSchema }) => {
         </div>
         <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
-            <p>Revenue</p>
+            <p>Total Deposits</p>
             <p>$</p>
           </div>
           <p>$45,231.89</p>
@@ -40,7 +39,7 @@ const CardComponent = ({ data }: { data: TArrayCardSchema }) => {
         </div>
         <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
-            <p>Revenue</p>
+            <p>Total Withdrawals</p>
             <p>$</p>
           </div>
           <p>$45,231.89</p>

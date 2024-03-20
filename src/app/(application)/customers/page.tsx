@@ -1,4 +1,3 @@
-import { z } from "zod";
 import CustomerComponent from "./component/CustomerComponent";
 import { ArrayCustomerSchema } from "./types/types";
 
@@ -6,6 +5,9 @@ const fetchCustomers = async () => {
   try {
     const res = await fetch("http://localhost:3000/api/customers", {
       cache: "no-store",
+      next: {
+        revalidate: 2,
+      },
     });
 
     const data = await res.json();
@@ -24,6 +26,8 @@ const CustomersPage = async () => {
   const data = await fetchCustomers();
 
   if (!data) return <div>Something went wrong</div>;
+
+  console.log(data);
 
   return (
     <main>

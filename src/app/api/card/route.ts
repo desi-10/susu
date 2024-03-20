@@ -1,6 +1,7 @@
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
-import { postCardSchema } from "./schema/cardSchema";
+import { postCardSchema, postCardSchemaAPI } from "./schema/cardSchema";
+import { revalidatePath } from "next/cache";
 
 export const GET = async () => {
   try {
@@ -23,7 +24,8 @@ export const GET = async () => {
 export const POST = async (req: Request) => {
   try {
     const body = await req.json();
-    const validFields = postCardSchema.safeParse(body);
+
+    const validFields = postCardSchemaAPI.safeParse(body);
     if (!validFields.success) {
       return NextResponse.json({
         success: false,
@@ -41,6 +43,8 @@ export const POST = async (req: Request) => {
         customer_id: customerId,
       },
     });
+
+    // revalidatePath("http://localhost:3000/card");
     return NextResponse.json({ success: true, data: createCard });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message });

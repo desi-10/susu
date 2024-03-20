@@ -3,15 +3,14 @@ import { DataTable } from "@/components/table/data-table";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { columns } from "./columns";
+import CreateDeposit from "./CreateDeposit";
 
 const DepositComponent = ({ data }: any) => {
   return (
     <>
       <section className="flex justify-between items-center py-5">
         <h1 className="text-lg lg:text-3xl font-bold">Deposits</h1>
-        <div>
-          <Button className="shadow-md">Download</Button>
-        </div>
+        <CreateDeposit />
       </section>
 
       <section className="grid gap-2 md:grid-cols-4 lg:gap-5 mb-10">
