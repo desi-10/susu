@@ -1,5 +1,8 @@
 "use client";
 
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+
 import {
   ColumnDef,
   flexRender,
@@ -75,7 +78,21 @@ export function DataTable<TData, TValue>({
 
   const handleExcel = () => {
     const filteredData = data.filter((_, index) => rowSelection[index]);
-    console.log(filteredData);
+
+    const worksheet = XLSX.utils.json_to_sheet(filteredData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // Buffer to store the generated Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
+    });
+
+    saveAs(blob, "data.xlsx");
   };
 
   return (

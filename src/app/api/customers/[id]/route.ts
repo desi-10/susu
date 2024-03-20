@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 
-export const GET = async ({ params }: { params: { id: string } }) => {
+export const GET = async (
+  req: Request,
+  { params }: { params: { id: string } }
+) => {
   console.log(params.id);
 
   if (params.id === "") {
@@ -11,7 +14,12 @@ export const GET = async ({ params }: { params: { id: string } }) => {
   try {
     const findCustomer = await prisma.customer.findUnique({
       where: { customerId: params.id },
+      include: {
+        cards: true,
+      },
     });
+
+    console.log(findCustomer);
 
     return NextResponse.json({ success: true, data: findCustomer });
   } catch (error: any) {

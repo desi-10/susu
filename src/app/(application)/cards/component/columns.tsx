@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cardSchema } from "../page";
+import { currency } from "@/lib/utils";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -82,13 +83,7 @@ export const columns: ColumnDef<cardSchema>[] = [
     accessorKey: "rate",
     header: () => <div>Rate</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("rate"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return <div className="font-medium">{formatted}</div>;
+      return <div className="font-medium">{currency(row.original.rate)}</div>;
     },
   },
   {
