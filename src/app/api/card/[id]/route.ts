@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { patchCardSchema } from "../schema/cardSchema";
 
 export const GET = async (
-  _req: Request,
+  req: Request,
   { params }: { params: { id: string } }
 ) => {
   if (params.id === "")
@@ -57,7 +57,7 @@ export const PATCH = async (
 };
 
 export const DELETE = async (
-  _req: NextRequest,
+  req: Request,
   { params }: { params: { id: string } }
 ) => {
   if (params.id === "") {
