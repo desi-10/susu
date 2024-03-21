@@ -1,9 +1,9 @@
 import prisma from "@/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { patchCardSchema } from "../schema/cardSchema";
 
 export const GET = async (
-  req: Request,
+  _req: Request,
   { params }: { params: { id: string } }
 ) => {
   if (params.id === "")
@@ -56,7 +56,10 @@ export const PATCH = async (
   return NextResponse.json({ success: true, data: updateCard });
 };
 
-export const DELETE = async ({ params }: { params: { id: string } }) => {
+export const DELETE = async (
+  _req: NextRequest,
+  { params }: { params: { id: string } }
+) => {
   if (params.id === "") {
     return NextResponse.json({ success: false, error: "Card not found" });
   }

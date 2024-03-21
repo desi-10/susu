@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { patchDepositSchema } from "../schema/depositSchema";
 import prisma from "@/lib/db";
+import { NextApiRequest } from "next";
 
 export const PATCH = async (
   req: Request,
@@ -30,7 +31,10 @@ export const PATCH = async (
   }
 };
 
-export const DELETE = async ({ params }: { params: { id: string } }) => {
+export const DELETE = async (
+  req: Request,
+  { params }: { params: { id: string } }
+) => {
   if (params.id === "")
     return NextResponse.json({ success: false, error: "Deposit not found" });
 

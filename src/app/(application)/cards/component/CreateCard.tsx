@@ -23,6 +23,8 @@ import {
   TPostCardSchema,
   postCardSchema,
 } from "@/app/api/card/schema/cardSchema";
+import { TArrayCardSchema } from "../page";
+import { ArrayCustomerSchema } from "../../customers/types/types";
 
 type User = {
   userId: string;
@@ -34,6 +36,7 @@ type User = {
 
 const CreateCard = () => {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
+  const [customers, setCustomers] = useState<ArrayCustomerSchema | null>(null);
   const {
     register,
     handleSubmit,
@@ -43,6 +46,24 @@ const CreateCard = () => {
   } = useForm<TPostCardSchema>({
     resolver: zodResolver(postCardSchema),
   });
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/customer");
+        const data = await res.json();
+        if (data.success === false) throw data.error;
+        const validFields = ArrayCustomerSchema.safeParse(data.data);
+        if (!validFields.success) {
+          throw validFields.error.flatten();
+        }
+        setCustomers(validFields.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCustomers();
+  }, []);
 
   useEffect(() => {
     const storage = localStorage.getItem("user");
@@ -114,7 +135,11 @@ const CreateCard = () => {
               control={control}
               name="customerId"
               render={({ field: { onChange, value } }) => (
-                <SelectScrollable onChange={onChange} selected={value} />
+                <SelectScrollable
+                  customers={customers}
+                  onChange={onChange}
+                  selected={value}
+                />
               )}
             />
           </div>
