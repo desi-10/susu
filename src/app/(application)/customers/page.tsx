@@ -27,8 +27,6 @@ const CustomersPage = async () => {
 
   if (!data) return <div>Something went wrong</div>;
 
-  console.log(data);
-
   return (
     <main>
       <CustomerComponent data={data} />

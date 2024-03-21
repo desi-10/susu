@@ -1,13 +1,13 @@
-import { Button } from "@/components/ui/button";
-import React from "react";
-import { SingleCustomerType } from "../[id]/page";
+"use client";
 import { TableDemo } from "@/components/examples/TableDemo";
+import { Button } from "@/components/ui/button";
 import { currency } from "@/lib/utils";
+import React from "react";
 
-const SingleCustomerComponent = ({ data }: { data: SingleCustomerType }) => {
-  const calculatedRate = () => {
-    return data.cards.reduce((acc, curr) => acc + curr.rate, 0);
-  };
+const SingleCardComponent = () => {
+  //  const calculatedRate = () => {
+  //     return data.cards.reduce((acc, curr) => acc + curr.rate, 0);
+  //   };
   return (
     <>
       <div className="flex justify-between items-center py-5">
@@ -21,11 +21,11 @@ const SingleCustomerComponent = ({ data }: { data: SingleCustomerType }) => {
           <div>
             <div className="flex items-center space-x-3">
               <p>Name</p>
-              <p>{data.customerName}</p>
+              {/* <p>{data.customerName}</p> */}
             </div>
             <div className="flex items-center space-x-3">
               <p>ID</p>
-              <p className="truncate">{data.customerId}</p>
+              {/* <p className="truncate">{data.customerId}</p> */}
             </div>
             <div className="flex items-center space-x-3">
               <p>Contact</p>
@@ -35,7 +35,7 @@ const SingleCustomerComponent = ({ data }: { data: SingleCustomerType }) => {
         </section>
 
         <div className="flex space-x-5 items-center">
-          <p className="text-4xl font-bold">{currency(calculatedRate())}</p>
+          {/* <p className="text-4xl font-bold">{currency(calculatedRate())}</p> */}
           <section className="grid gap-2">
             <Button>Make Deposit</Button>
             <Button variant="outline">Make Withdrawal</Button>
@@ -43,10 +43,11 @@ const SingleCustomerComponent = ({ data }: { data: SingleCustomerType }) => {
         </div>
       </section>
       <main className="mb-5">
-        <TableDemo data={data.cards} />
+        {/* <TableDemo data={data.cards} /> */}
+        {/* <TableDemo /> */}
       </main>
     </>
   );
 };
 
-export default SingleCustomerComponent;
+export default SingleCardComponent;

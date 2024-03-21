@@ -2,6 +2,22 @@ import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 import { patchCardSchema } from "../schema/cardSchema";
 
+export const GET = async (
+  req: Request,
+  { params }: { params: { id: string } }
+) => {
+  if (params.id === "")
+    return NextResponse.json({ success: false, error: "Card not found" });
+
+  const findUnique = await prisma.card.findUnique({
+    where: {
+      cardId: params.id,
+    },
+  });
+
+  return NextResponse.json({ success: true, data: findUnique });
+};
+
 export const PATCH = async (
   req: Request,
   { params }: { params: { id: string } }

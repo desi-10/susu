@@ -17,7 +17,7 @@ const CustomerComponent = ({ data }: { data: ArrayCustomerSchema }) => {
             <p>Total Customers</p>
             <p>$</p>
           </div>
-          <p>$45,231.89</p>
+          <p>{data.length}</p>
           <p>+20.1% from last month</p>
         </div>
         <div className="border p-3 rounded-lg shadow-lg">
