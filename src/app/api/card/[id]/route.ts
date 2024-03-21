@@ -13,6 +13,15 @@ export const GET = async (
     where: {
       cardId: params.id,
     },
+    include: {
+      customer: {
+        select: {
+          customerId: true,
+          customerName: true,
+        },
+      },
+      deposits: true,
+    },
   });
 
   return NextResponse.json({ success: true, data: findUnique });

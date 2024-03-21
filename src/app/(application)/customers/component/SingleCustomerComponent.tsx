@@ -3,16 +3,18 @@ import React from "react";
 import { SingleCustomerType } from "../[id]/page";
 import { TableDemo } from "@/components/examples/TableDemo";
 import { currency } from "@/lib/utils";
+import DeleteCustomer from "./DeleteCustomer";
 
 const SingleCustomerComponent = ({ data }: { data: SingleCustomerType }) => {
   const calculatedRate = () => {
     return data.cards.reduce((acc, curr) => acc + curr.rate, 0);
   };
+
   return (
     <>
       <div className="flex justify-between items-center py-5">
         <h1 className="text-lg lg:text-3xl font-bold">Edit Customer Details</h1>
-        <Button variant="destructive">Delete Customer</Button>
+        <DeleteCustomer customerId={data.customerId} />
       </div>
 
       <section className="flex justify-between items-center mb-8">
@@ -36,10 +38,6 @@ const SingleCustomerComponent = ({ data }: { data: SingleCustomerType }) => {
 
         <div className="flex space-x-5 items-center">
           <p className="text-4xl font-bold">{currency(calculatedRate())}</p>
-          <section className="grid gap-2">
-            <Button>Make Deposit</Button>
-            <Button variant="outline">Make Withdrawal</Button>
-          </section>
         </div>
       </section>
       <main className="mb-5">

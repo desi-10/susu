@@ -52,10 +52,10 @@ model Card {
   deposits   Deposit[]
   withdrawal withdrawal[]
 
-  customer    Customer @relation(fields: [customer_id], references: [customerId])
+  customer    Customer @relation(fields: [customer_id], references: [customerId],onDelete: Cascade)
   customer_id String
 
-  user    User   @relation(fields: [user_id], references: [userId])
+  user    User   @relation(fields: [user_id], references: [userId],onDelete: Cascade)
   user_id String
 
   createdAt DateTime @default(now())
@@ -67,13 +67,13 @@ model withdrawal {
 
   amount Float @default(0)
 
-  card    Card   @relation(fields: [card_id], references: [cardId])
+  card    Card   @relation(fields: [card_id], references: [cardId],onDelete: Cascade)
   card_id String
 
-  customer    Customer @relation(fields: [customer_id], references: [customerId])
+  customer    Customer @relation(fields: [customer_id], references: [customerId],onDelete: Cascade)
   customer_id String
 
-  user    User   @relation(fields: [user_id], references: [userId])
+  user    User   @relation(fields: [user_id], references: [userId],onDelete: Cascade)
   user_id String
 
   createdAt DateTime @default(now())
@@ -83,15 +83,15 @@ model withdrawal {
 model Deposit {
   deposit_id String @id @default(uuid())
 
-  card    Card   @relation(fields: [card_id], references: [cardId])
+  card    Card   @relation(fields: [card_id], references: [cardId],onDelete: Cascade)
   card_id String
 
   rate Float  @default(0)
 
-  user    User   @relation(fields: [user_id], references: [userId])
+  user    User   @relation(fields: [user_id], references: [userId],onDelete: Cascade)
   user_id String
 
-  customer    Customer @relation(fields: [customer_id], references: [customerId])
+  customer    Customer @relation(fields: [customer_id], references: [customerId],onDelete: Cascade)
   customer_id String
 
   createdAt DateTime @default(now())

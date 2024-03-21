@@ -61,7 +61,14 @@ export const PATCH = async (
   }
 };
 
-export const DELETE = async ({ params }: { params: { id: string } }) => {
+export const DELETE = async (
+  req: Request,
+  { params }: { params: { id: string } }
+) => {
+  if (params.id === "") {
+    return NextResponse.json({ success: false, error: "Customer not found" });
+  }
+
   try {
     await prisma.deposit.delete({
       where: { deposit_id: params.id },
