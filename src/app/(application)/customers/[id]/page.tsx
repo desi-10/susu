@@ -23,11 +23,8 @@ export type SingleCustomerType = z.infer<typeof singleCustomerSchema>;
 
 const fetchCustomer = async (id: string) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/customers/${id}`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/customers/${id}`, {
       cache: "no-store",
-      next: {
-        revalidate: 2,
-      },
     });
     const data = await res.json();
     if (data.success === false) throw data.error;

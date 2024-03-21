@@ -30,7 +30,7 @@ export function CreateCustomer() {
 
   const onSubmit: SubmitHandler<TFormFields> = (data) => {
     try {
-      const res = fetch("http://localhost:3000/api/customers", {
+      const res = fetch(`${process.env.BASE_URL}/api/customers`, {
         method: "POST",
         body: JSON.stringify(data),
       });

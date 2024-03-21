@@ -22,7 +22,7 @@ export type cardSchema = z.infer<typeof cardSchema>;
 
 const fetchCards = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/card", {
+    const res = await fetch(`${process.env.BASE_URL}/api/card`, {
       cache: "no-store",
     });
 

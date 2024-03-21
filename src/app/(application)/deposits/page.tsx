@@ -2,7 +2,7 @@ import React from "react";
 import DepositComponent from "./components/DepositComponent";
 
 const fetchDeposits = async () => {
-  const res = await fetch("http://localhost:3000/api/deposits", {
+  const res = await fetch(`${process.env.BASE_URL}/api/deposits`, {
     cache: "no-store",
   });
   return res.json();

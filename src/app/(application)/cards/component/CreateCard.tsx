@@ -50,7 +50,7 @@ const CreateCard = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/customer");
+        const res = await fetch(`${process.env.BASE_URL}/api/customer`);
         const data = await res.json();
         if (data.success === false) throw data.error;
         const validFields = ArrayCustomerSchema.safeParse(data.data);
@@ -76,7 +76,7 @@ const CreateCard = () => {
 
   const onSubmit: SubmitHandler<TPostCardSchema> = async (data) => {
     try {
-      await fetch("http://localhost:3000/api/card", {
+      await fetch(`${process.env.BASE_URL}/api/card`, {
         method: "POST",
         body: JSON.stringify({ ...data, userId: loggedInUser?.userId }),
       });

@@ -12,7 +12,7 @@ const DeleteCustomer = ({ customerId }: { customerId: string }) => {
 
   const handleDelete = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/customers/${id}`, {
+      const res = await fetch(`${process.env.BASE_URL}/api/customers/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();

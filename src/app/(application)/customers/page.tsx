@@ -3,11 +3,8 @@ import { ArrayCustomerSchema } from "./types/types";
 
 const fetchCustomers = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/customers", {
+    const res = await fetch(`${process.env.BASE_URL}/api/customers`, {
       cache: "no-store",
-      next: {
-        revalidate: 2,
-      },
     });
 
     const data = await res.json();
