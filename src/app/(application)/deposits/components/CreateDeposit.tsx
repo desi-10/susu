@@ -70,9 +70,8 @@ const CreateDeposit = () => {
 
   useEffect(() => {
     const fetchCustomer = async () => {
-      const res = await fetch(`${process.env.BASE_URL}/api/customers`);
+      const res = await fetch(`http://localhost:3000/api/customers`);
       const data = await res.json();
-
       if (!data.success) throw "Error";
       setCustomers(data.data);
     };

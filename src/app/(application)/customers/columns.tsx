@@ -138,7 +138,7 @@ export const columns: ColumnDef<customerSchema>[] = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(data.customerId)}
             >
-              Copy Customer ID
+              Copy customer Id
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>

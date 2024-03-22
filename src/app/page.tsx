@@ -50,7 +50,7 @@ export default function Home() {
       </div>
       <form
         onSubmit={handleSubmit(onSumbit)}
-        className="container mx-auto md:w-[400px]"
+        className="container mx-auto md:w-[500px]"
       >
         <div className="mb-5">
           <h1 className="scroll-m-20 text-center mb-1 text-xl md:text-3xl font-semibold tracking-tight first:mt-0">

@@ -70,8 +70,8 @@ export const DELETE = async (
   }
 
   try {
-    await prisma.deposit.delete({
-      where: { deposit_id: params.id },
+    await prisma.customer.delete({
+      where: { customerId: params.id },
     });
 
     return NextResponse.json({ success: true, message: "Deposit deleted" });

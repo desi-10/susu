@@ -13,7 +13,9 @@ const Navbar = () => {
     <main className="">
       <section className="flex justify-between items-center">
         <div className="flex justify-between items-center space-x-10">
-          <Label>Desmond Kudjuh</Label>
+          <Label className="text-lg">
+            <Link href="/dashboard">Susu Management System</Link>
+          </Label>
 
           <div className="hidden lg:flex items-center space-x-5 text-gray-400">
             <Link href="/dashboard">
@@ -65,9 +67,9 @@ const Navbar = () => {
         </div>
 
         <div className="hidden lg:flex items-center space-x-5">
-          <form action="">
+          {/* <form action="">
             <Input type="text" className="" placeholder="Search..." />
-          </form>
+          </form> */}
           <Avatar>
             {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
             <AvatarFallback>CN</AvatarFallback>

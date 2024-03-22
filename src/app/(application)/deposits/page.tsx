@@ -10,7 +10,6 @@ const fetchDeposits = async () => {
 
 const DepositsPage = async () => {
   const data = await fetchDeposits();
-  console.log(data);
 
   return (
     <div>

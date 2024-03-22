@@ -3,6 +3,7 @@ import React from "react";
 import { columns } from "./columns";
 import { TArrayCardSchema } from "../page";
 import CreateCard from "./CreateCard";
+import { currency } from "@/lib/utils";
 
 const CardComponent = ({ data }: { data: TArrayCardSchema }) => {
   return (
@@ -18,32 +19,32 @@ const CardComponent = ({ data }: { data: TArrayCardSchema }) => {
             <p>Total Cards</p>
             <p>$</p>
           </div>
-          <p>$45,231.89</p>
-          <p>+20.1% from last month</p>
+          <p className="font-bold text-2xl">{data.length}</p>
+          <p className="text-xs">from last month</p>
         </div>
         <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
             <p>Total Revenue</p>
             <p>$</p>
           </div>
-          <p>$45,231.89</p>
-          <p>+20.1% from last month</p>
+          <p className="font-bold text-2xl">{currency(45231.89)}</p>
+          <p className="text-xs">from last month</p>
         </div>
         <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
             <p>Total Deposits</p>
             <p>$</p>
           </div>
-          <p>$45,231.89</p>
-          <p>+20.1% from last month</p>
+          <p className="font-bold text-2xl">{currency(45231.89)}</p>
+          <p className="text-xs">from last month</p>
         </div>
         <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
             <p>Total Withdrawals</p>
             <p>$</p>
           </div>
-          <p>$45,231.89</p>
-          <p>+20.1% from last month</p>
+          <p className="font-bold text-2xl">{currency(45231.89)}</p>
+          <p className="text-xs">from last month</p>
         </div>
       </section>
 

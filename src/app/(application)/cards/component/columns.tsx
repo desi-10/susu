@@ -16,6 +16,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { cardSchema } from "../page";
 import { currency } from "@/lib/utils";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -140,11 +141,13 @@ export const columns: ColumnDef<cardSchema>[] = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(data.cardId)}
             >
-              Copy payment ID
+              Copy card Id
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/cards/${data.cardId}`}>View card</Link>
+            </DropdownMenuItem>
+            {/* <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       );

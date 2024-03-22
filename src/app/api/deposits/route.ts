@@ -45,7 +45,7 @@ export const POST = async (req: Request) => {
   if (!validFields.success)
     return NextResponse.json({
       success: false,
-      error: validFields.error.flatten(),
+      error: validFields.error.flatten().fieldErrors,
     });
 
   const { cardId, userId, customerId, rate } = validFields.data;

@@ -2,6 +2,7 @@ import { columns } from "@/app/(application)/customers/columns";
 import { DataTable } from "@/components/table/data-table";
 import { ArrayCustomerSchema } from "../types/types";
 import { CreateCustomer } from "@/app/(application)/customers/component/createCustomer";
+import { currency } from "@/lib/utils";
 
 const CustomerComponent = ({ data }: { data: ArrayCustomerSchema }) => {
   return (
@@ -17,32 +18,32 @@ const CustomerComponent = ({ data }: { data: ArrayCustomerSchema }) => {
             <p>Total Customers</p>
             <p>$</p>
           </div>
-          <p>{data.length}</p>
-          <p>+20.1% from last month</p>
+          <p className="text-2xl font-bold">{data.length}</p>
+          <p className="text-xs">from last month</p>
         </div>
         <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
             <p>Customer Revenue</p>
             <p>$</p>
           </div>
-          <p>$45,231.89</p>
-          <p>+20.1% from last month</p>
+          <p className="text-2xl font-bold">{currency(300)}</p>
+          <p className="text-xs">from last month</p>
         </div>
         <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
             <p>Total Deposit</p>
             <p>$</p>
           </div>
-          <p>$45,231.89</p>
-          <p>+20.1% from last month</p>
+          <p className="text-2xl font-bold">{currency(300)}</p>
+          <p className="text-xs">from last month</p>
         </div>
         <div className="border p-3 rounded-lg shadow-lg">
           <div className="flex justify-between">
             <p>Total withdrawals</p>
             <p>$</p>
           </div>
-          <p>$45,231.89</p>
-          <p>+20.1% from last month</p>
+          <p className="text-2xl font-bold">{currency(300)}</p>
+          <p className="text-xs">from last month</p>
         </div>
       </section>
 

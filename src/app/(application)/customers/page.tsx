@@ -1,10 +1,15 @@
 import CustomerComponent from "./component/CustomerComponent";
 import { ArrayCustomerSchema } from "./types/types";
 
+export const dynamic = "force-dynamic";
+
 const fetchCustomers = async () => {
   try {
     const res = await fetch(`${process.env.BASE_URL}/api/customers`, {
-      cache: "no-store",
+      next: {
+        tags: ["customers"],
+        revalidate: 0,
+      },
     });
 
     const data = await res.json();

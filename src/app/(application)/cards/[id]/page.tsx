@@ -14,13 +14,25 @@ const singleCardSchema = z.object({
     customerId: z.string(),
     customerName: z.string(),
   }),
+  deposits: z.array(
+    z.object({
+      deposit_id: z.string(),
+      rate: z.number(),
+      customer: z.object({
+        customerId: z.string(),
+        customerName: z.string(),
+      }),
+      updatedAt: z.string(),
+      createdAt: z.string(),
+    })
+  ),
 });
 
 export type Card = z.infer<typeof singleCardSchema>;
 
 const fetchCard = async (id: string) => {
   try {
-    const res = await fetch(`${process.env.BASE_URL}/api/card/${id}`, {
+    const res = await fetch(`http://localhost:3000/api/card/${id}`, {
       cache: "no-store",
     });
     const data = await res.json();

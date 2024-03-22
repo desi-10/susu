@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 export function CreateCustomer() {
@@ -30,11 +31,13 @@ export function CreateCustomer() {
 
   const onSubmit: SubmitHandler<TFormFields> = (data) => {
     try {
-      const res = fetch(`${process.env.BASE_URL}/api/customers`, {
+      const res = fetch(`http://localhost:3000/api/customers`, {
         method: "POST",
         body: JSON.stringify(data),
       });
       reset();
+      revalidateTag("customers");
+      revalidatePath("http://localhost:3000/customers");
     } catch (error) {
       console.error(error);
     }

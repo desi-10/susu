@@ -26,7 +26,7 @@ import {
 import { TArrayCardSchema } from "../page";
 import { ArrayCustomerSchema } from "../../customers/types/types";
 
-type User = {
+export type User = {
   userId: string;
   username: string;
   customerId: string;
@@ -50,7 +50,7 @@ const CreateCard = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const res = await fetch(`${process.env.BASE_URL}/api/customer`);
+        const res = await fetch(`http://localhost:3000/api/customers`);
         const data = await res.json();
         if (data.success === false) throw data.error;
         const validFields = ArrayCustomerSchema.safeParse(data.data);
@@ -76,7 +76,7 @@ const CreateCard = () => {
 
   const onSubmit: SubmitHandler<TPostCardSchema> = async (data) => {
     try {
-      await fetch(`${process.env.BASE_URL}/api/card`, {
+      await fetch(`http://localhost:3000/api/card`, {
         method: "POST",
         body: JSON.stringify({ ...data, userId: loggedInUser?.userId }),
       });

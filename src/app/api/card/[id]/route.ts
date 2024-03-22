@@ -20,7 +20,11 @@ export const GET = async (
           customerName: true,
         },
       },
-      deposits: true,
+      deposits: {
+        include: {
+          customer: true,
+        },
+      },
     },
   });
 

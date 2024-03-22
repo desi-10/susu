@@ -1,5 +1,6 @@
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
+
 // import { Karla as FontSans } from "next/font/google";
 
 // const fontSans = FontSans({

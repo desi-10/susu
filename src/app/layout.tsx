@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
+import { Toaster } from "@/components/ui/sonner";
 
 // const fontSans = FontSans({
 //   subsets: ["latin"],
@@ -22,7 +23,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      
       <ThemeProvider
         attribute="class"
         defaultTheme="system"
@@ -37,6 +37,7 @@ export default function RootLayout({
         >
           {children}
         </body>
+        <Toaster />
       </ThemeProvider>
     </html>
   );

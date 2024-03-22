@@ -27,7 +27,10 @@ export type Deposit = {
     username: string;
   };
   start_date: string;
-  customerId: string;
+  customer: {
+    customerId: string;
+    customerName: string;
+  };
   updatedAt: string;
 };
 
@@ -106,20 +109,24 @@ export const columns: ColumnDef<Deposit>[] = [
 
   {
     id: "customer ID",
-    accessorKey: "customerId",
+    accessorKey: "customer.customerId",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Customer ID
+          Customer Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      return <div className="truncate w-44">{row.original.customerId}</div>;
+      return (
+        <div className="truncate w-44">
+          {row.original.customer.customerName}
+        </div>
+      );
     },
   },
   {

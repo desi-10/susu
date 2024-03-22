@@ -16,6 +16,8 @@ export const GET = async () => {
   }
 };
 
+export const revalidate = true;
+
 export const POST = async (req: Request) => {
   const body = await req.json();
 
@@ -38,7 +40,7 @@ export const POST = async (req: Request) => {
         nextOfKin,
       },
     });
-    revalidateTag("customers");
+    revalidatePath("/customers");
     return NextResponse.json({ success: true, data: createCustomer });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message });
