@@ -1,20 +1,41 @@
 "use client";
 
 import React from "react";
-import { Input } from "./ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Label } from "./ui/label";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Flower } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useTheme } from "next-themes";
 
 const Navbar = () => {
+  const { setTheme } = useTheme();
   const path = usePathname();
+  const router = useRouter();
+  const handleLocalStorage = () => {
+    localStorage.removeItem("user");
+    router.push("/");
+  };
+
   return (
     <main className="">
       <section className="flex justify-between items-center">
         <div className="flex justify-between items-center space-x-10">
-          <Label className="text-lg">
-            <Link href="/dashboard">Susu Management System</Link>
+          <Label>
+            <Link href="/dashboard">
+              <div className="flex flex-col items-center justify-center">
+                <Flower />
+                <p>Mini Bank</p>
+              </div>
+            </Link>
           </Label>
 
           <div className="hidden lg:flex items-center space-x-5 text-gray-400">
@@ -67,13 +88,33 @@ const Navbar = () => {
         </div>
 
         <div className="hidden lg:flex items-center space-x-5">
-          {/* <form action="">
-            <Input type="text" className="" placeholder="Search..." />
-          </form> */}
-          <Avatar>
-            {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <div className="h-10 w-10 border flex items-center justify-center rounded-full">
+                <Avatar>
+                  {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                Light
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                Dark
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                System
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <div onClick={handleLocalStorage}>Logout</div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </section>
     </main>

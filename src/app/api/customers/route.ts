@@ -1,27 +1,33 @@
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
-import { formFields } from "./schema/customerSchema";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
+import { customerPostSchema } from "@/types/customers/customers";
 
 export const GET = async () => {
   try {
     const customers = await prisma.customer.findMany({
       include: {
-        cards: true,
+        cards: {
+          select: {
+            cardId: true,
+            hasEnded: true,
+            rate: true,
+            startDate: true,
+          },
+        },
       },
     });
+    revalidatePath("/customers");
     return NextResponse.json({ success: true, data: customers });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message });
   }
 };
 
-export const revalidate = true;
-
 export const POST = async (req: Request) => {
   const body = await req.json();
 
-  const validFields = formFields.safeParse(body);
+  const validFields = customerPostSchema.safeParse(body);
 
   if (!validFields.success) {
     return NextResponse.json({
@@ -41,7 +47,11 @@ export const POST = async (req: Request) => {
       },
     });
     revalidatePath("/customers");
-    return NextResponse.json({ success: true, data: createCustomer });
+    return NextResponse.json({
+      success: true,
+      message: "Customer created successfully",
+      data: createCustomer,
+    });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message });
   }

@@ -1,11 +1,11 @@
 import { DataTable } from "@/components/table/data-table";
 import React from "react";
 import { columns } from "./columns";
-import { TArrayCardSchema } from "../page";
 import CreateCard from "./CreateCard";
 import { currency } from "@/lib/utils";
+import { getCardTypes } from "@/types/cards/types";
 
-const CardComponent = ({ data }: { data: TArrayCardSchema }) => {
+const CardComponent = ({ data }: { data: getCardTypes[] }) => {
   return (
     <>
       <section className="flex justify-between items-center py-5">

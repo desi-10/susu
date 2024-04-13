@@ -31,3 +31,11 @@ export const loginUserSchema = z.object({
 });
 
 export type FormFields = z.infer<typeof loginUserSchema>;
+
+export type User = {
+  userId: string;
+  username: string;
+  customerId: string;
+  createdAt: string;
+  updatedAt: string;
+};

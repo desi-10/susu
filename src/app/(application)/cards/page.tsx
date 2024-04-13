@@ -1,24 +1,6 @@
 import { z } from "zod";
 import CardComponent from "./component/CardComponent";
-
-const cardSchema = z.object({
-  cardId: z.string(),
-  rate: z.number().positive(),
-  startDate: z.string(),
-  hasEnded: z.boolean(),
-  totalAmount: z.number(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  customer: z.object({
-    customerId: z.string(),
-    customerName: z.string(),
-  }),
-});
-
-const ArrayCardSchema = z.array(cardSchema);
-
-export type TArrayCardSchema = z.infer<typeof ArrayCardSchema>;
-export type cardSchema = z.infer<typeof cardSchema>;
+import { ArrayCardSchema } from "@/types/cards/types";
 
 const fetchCards = async () => {
   try {
@@ -27,13 +9,12 @@ const fetchCards = async () => {
     });
 
     const data = await res.json();
-    if (!data.success) throw "Error";
-    // const validFields = ArrayCardSchema.safeParse(data.data);
-    // if (!validFields.success) throw validFields.error.flatten();
-    // return validFields.data;
-    return data.data;
+    const validFields = ArrayCardSchema.safeParse(data.data);
+    if (!validFields.success) {
+      throw validFields.error;
+    }
+    return validFields.data;
   } catch (error) {
-    console.log(error);
     console.error(error);
   }
 };

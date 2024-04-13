@@ -5,7 +5,7 @@ import {
   FormFields,
   createUserschema,
   loginUserSchema,
-} from "./types/types";
+} from "./types/users/types";
 import prisma from "./lib/db";
 
 export const createUsers = async (clientData: CreateFormFields) => {

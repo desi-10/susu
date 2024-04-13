@@ -1,8 +1,5 @@
 "use client";
-import {
-  TFormFields,
-  formFields,
-} from "@/app/api/customers/schema/customerSchema";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,28 +13,31 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { revalidatePath, revalidateTag } from "next/cache";
 import { useForm, SubmitHandler } from "react-hook-form";
+import {
+  CustomerPostType,
+  customerPostSchema,
+} from "@/types/customers/customers";
+import { toast } from "sonner";
 
 export function CreateCustomer() {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { isLoading, errors },
-  } = useForm<TFormFields>({
-    resolver: zodResolver(formFields),
+    formState: { isSubmitting, errors },
+  } = useForm<CustomerPostType>({
+    resolver: zodResolver(customerPostSchema),
   });
 
-  const onSubmit: SubmitHandler<TFormFields> = (data) => {
+  const onSubmit: SubmitHandler<CustomerPostType> = (data) => {
     try {
       const res = fetch(`http://localhost:3000/api/customers`, {
         method: "POST",
         body: JSON.stringify(data),
       });
       reset();
-      revalidateTag("customers");
-      revalidatePath("http://localhost:3000/customers");
+      toast("Customer created successfully");
     } catch (error) {
       console.error(error);
     }
@@ -79,6 +79,11 @@ export function CreateCustomer() {
               {...register("gender")}
               placeholder="Enter gender"
             />
+            {errors.gender && (
+              <span className="text-red-500 text-sm">
+                {errors.gender.message}
+              </span>
+            )}
           </div>
           <div>
             <Label htmlFor="location" className="text-sm">
@@ -101,7 +106,7 @@ export function CreateCustomer() {
             />
           </div>
           <DialogFooter>
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isSubmitting}>
               Save customer
             </Button>
           </DialogFooter>

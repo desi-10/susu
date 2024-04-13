@@ -5,7 +5,7 @@ import { ModeToggle } from "@/components/examples/ModeToggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createUserschema, CreateFormFields } from "@/types/types";
+import { createUserschema, CreateFormFields } from "@/types/users/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";

@@ -5,11 +5,13 @@ import { ModeToggle } from "@/components/examples/ModeToggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { FormFields, loginUserSchema } from "@/types/types";
+import { FormFields, loginUserSchema } from "@/types/users/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Flower } from "lucide-react";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 export default function Home() {
@@ -25,11 +27,9 @@ export default function Home() {
   const onSumbit: SubmitHandler<FormFields> = async (data) => {
     try {
       const info = await loginUser(data);
-
       if (!info?.success) {
         return console.log(info?.errors || info?.message);
       }
-      console.log(info.findUser);
       localStorage.setItem("user", JSON.stringify(info.findUser));
       router.push("/dashboard");
       reset();
@@ -41,11 +41,15 @@ export default function Home() {
   return (
     <main className="h-screen flex w-full lg:grid lg:grid-cols-2 justify-center items-center">
       <div className="container hidden py-10 bg-gray-900 text-white lg:flex flex-col h-screen justify-between dark:bg-gray-950">
-        <h1 className="">Acme Inc</h1>
+        <section>
+          <div className="flex flex-col items-center justify-center w-fit">
+            <Flower />
+            <p>Mini Bank</p>
+          </div>
+        </section>
         <p className="mt-6 border-l-2 pl-6 italic">
-          Acme Inc “This library has saved me countless hours of work and helped
-          me deliver stunning designs to my clients faster than ever before.”
-          <p className="text-sm font-medium leading-none">Sofia Davis</p>
+          Saving money is the best defense against financial worries
+          <p className="text-sm font-medium leading-none">George Clason</p>
         </p>
       </div>
       <form

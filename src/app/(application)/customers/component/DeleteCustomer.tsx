@@ -1,10 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { log } from "console";
 import { useRouter } from "next/navigation";
 
 import React from "react";
 import { useFormStatus } from "react-dom";
+import { toast } from "sonner";
 
 const DeleteCustomer = ({ customerId }: { customerId: string }) => {
   const { pending } = useFormStatus();
@@ -12,12 +14,11 @@ const DeleteCustomer = ({ customerId }: { customerId: string }) => {
 
   const handleDelete = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/customers/${id}`, {
+      await fetch(`http://localhost:3000/api/customers/${id}`, {
         method: "DELETE",
       });
-      const data = await res.json();
-      if (!data.success) return;
       router.push("/customers");
+      toast("Customer deleted successfully");
     } catch (error) {
       console.error(error);
     }

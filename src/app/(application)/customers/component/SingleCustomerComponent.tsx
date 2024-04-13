@@ -1,20 +1,47 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { SingleCustomerType } from "../[id]/page";
 import { TableDemo } from "@/components/examples/TableDemo";
 import { currency } from "@/lib/utils";
 import DeleteCustomer from "./DeleteCustomer";
+import { AlertDialogDemo } from "@/components/examples/AlertDialog";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const SingleCustomerComponent = ({ data }: { data: SingleCustomerType }) => {
+  const router = useRouter();
+
   const calculatedRate = () => {
     return data.cards.reduce((acc, curr) => acc + curr.rate, 0);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/customers/${data.customerId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const dataApi = await res.json();
+      if (!dataApi.success) return;
+      toast(`${dataApi.message}`);
+      router.push("/customers");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <>
       <div className="flex justify-between items-center py-5">
         <h1 className="text-lg lg:text-3xl font-bold">Edit Customer Details</h1>
-        <DeleteCustomer customerId={data.customerId} />
+        {/* <DeleteCustomer customerId={data.customerId} /> */}
+        <AlertDialogDemo
+          title="Delete customer"
+          handleFunction={handleDelete}
+        />
       </div>
 
       <section className="flex justify-between items-center mb-8">

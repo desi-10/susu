@@ -15,34 +15,26 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import SelectScrollable from "@/components/examples/SelectScrollable";
 import { useEffect, useState } from "react";
+import { User } from "@/types/users/types";
 import {
-  TPostCardSchema,
-  postCardSchema,
-} from "@/app/api/card/schema/cardSchema";
-import { TArrayCardSchema } from "../page";
-import { ArrayCustomerSchema } from "../../customers/types/types";
-
-export type User = {
-  userId: string;
-  username: string;
-  customerId: string;
-  createdAt: string;
-  updatedAt: string;
-};
+  GetCustomerTypes,
+  getCustomerSchemaArray,
+} from "@/types/customers/customers";
+import { toast } from "sonner";
+import { TPostCardSchema, postCardSchema } from "@/types/cards/types";
 
 const CreateCard = () => {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
-  const [customers, setCustomers] = useState<ArrayCustomerSchema | null>(null);
+  const [customers, setCustomers] = useState<GetCustomerTypes[] | null>(null);
   const {
     register,
     handleSubmit,
     control,
     reset,
-    formState: { isLoading, errors },
+    formState: { isSubmitting, errors },
   } = useForm<TPostCardSchema>({
     resolver: zodResolver(postCardSchema),
   });
@@ -53,9 +45,9 @@ const CreateCard = () => {
         const res = await fetch(`http://localhost:3000/api/customers`);
         const data = await res.json();
         if (data.success === false) throw data.error;
-        const validFields = ArrayCustomerSchema.safeParse(data.data);
+        const validFields = getCustomerSchemaArray.safeParse(data.data);
         if (!validFields.success) {
-          throw validFields.error.flatten();
+          throw validFields.error;
         }
         setCustomers(validFields.data);
       } catch (error) {
@@ -81,6 +73,7 @@ const CreateCard = () => {
         body: JSON.stringify({ ...data, userId: loggedInUser?.userId }),
       });
       reset();
+      toast("Card created successfully");
     } catch (error) {
       console.error(error);
     }
@@ -142,12 +135,13 @@ const CreateCard = () => {
                 />
               )}
             />
+            {errors.customerId && (
+              <span className="text-xs text-red-500">
+                {errors.customerId.message}
+              </span>
+            )}
           </div>
-          {errors.customerId && (
-            <span className="text-xs text-red-500">
-              {errors.customerId.message}
-            </span>
-          )}
+
           <div>
             <Label className="text-sm">Has Ended</Label>
             <RadioGroup defaultValue="no">
@@ -167,7 +161,7 @@ const CreateCard = () => {
           </div>
 
           <DialogFooter>
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isSubmitting}>
               Save Card
             </Button>
           </DialogFooter>
